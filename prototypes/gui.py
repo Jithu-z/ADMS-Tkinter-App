@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox,ttk
-import ADMS_Latest as adms
+import python.ADMS.ADMS_functions as adms
 import mysql.connector
 db=mysql.connector.connect(host="localhost",user="root",password="OPEN SQL",database="ADMS")
 cur=db.cursor()
