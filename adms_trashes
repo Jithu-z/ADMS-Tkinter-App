@@ -1,0 +1,27 @@
+
+#SEATCHOOSER MK1 CODE (RANDOM CHOICE)
+# elif(ch==2):
+#         S=["1-EC","2-EC","3-EC","4-EC","5-EC","6-EC","7-EC","8-EC","9-EC","10-EC","11-EC","12-EC"]
+#         L=[]
+#         c=0
+#         while(n>0):
+#             x=random.choice(S)
+#             if(Le==[]): 
+#                 L.append(x)
+#                 n-=1
+#             else:
+#                 flag=0
+#                 for i in Le:
+#                     if(x not in i and x not in L):
+#                         flag=1
+#                     else:
+#                         flag=0
+#                         break
+#                 if(flag==1):
+#                     L.append(x)
+#                     n-=1
+#             c+=1
+#             if(c>50):
+#                 L=[]
+#                 break
+#     # return L
