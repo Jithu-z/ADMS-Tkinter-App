@@ -21,10 +21,10 @@ def idcreator():
             break
     return r
    
-def passignup(name,mobile,rdate,add):
+def passignup(name,mobile,add):
          pid=idcreator()
-         cmd="insert into passenger values(%s,%s,%s,%s,%s)"
-         L=[pid,name,add,mobile,rdate]
+         cmd="insert into passenger (pass_id, name, address, mobile) values(%s,%s,%s,%s)"
+         L=[pid,name,add,mobile]
          cur.execute(cmd,L)
          db.commit()
 
@@ -223,14 +223,11 @@ def getid(no):
 def hasbooked(no):
     id=getid(no)
     cur.execute("select * from ticket where pass_id=%s",(id,))
-    x=cur.fetchall()
-    if(x==[]):
-        return False
-    else:
-        return True
-          
+    x=cur.fetchall() # Returns a list of tickets
+    return x
+
 def getdestinations(source):
-    cmd="select Going_to from schedule where Leave_from=%s"
+    cmd="select DISTINCT Going_to from schedule where Leave_from=%s"
     L=[source]
     cur.execute(cmd,L)
     x=cur.fetchall()
@@ -267,14 +264,20 @@ def getticket(id):
     cur.execute("select * from ticket where pass_id=%s",(id,))
     return cur.fetchall()
 
-def cancelticket(id):
+def cancelticket(id, flight_id):
     try:
-        cmd="delete from ticket where pass_id=%s"
-        L=[id]
-        cur.execute(cmd,L)
+        cmd="delete from ticket where pass_id=%s and Flight=%s"
+        # Allow flight_id to be a single ID or a list of IDs
+        if isinstance(flight_id, list):
+            L = [(id, f_id) for f_id in flight_id]
+            cur.executemany(cmd, L)
+        else:  # It's a single flight ID
+            L = [id, flight_id]
+            cur.execute(cmd, L)
         db.commit()
         return True
-    except:
+    except Exception as e:
+        print(f"An error occurred during cancellation: {e}")
         return False
 
 def getstatus(id):
@@ -330,4 +333,3 @@ def get_luggage(sno):
     
         
         
-
